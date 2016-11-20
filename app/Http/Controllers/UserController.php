@@ -2,15 +2,25 @@
 
 namespace App\Http\Controllers;
 
+use App\Post;
 use App\User;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Redirect;
 
 class UserController extends Controller
 {
     public function index(User $user)
     {
+        $user=User::where('username', $user->username)->first();
+
+        if(!$user)
+        {
+            abort(404);
+        }
 
         return view('users.profile')->with('user', $user);
 
@@ -48,5 +58,8 @@ class UserController extends Controller
             return view('user.list',compact('users'));
 
         }
+
+
+
 
 }

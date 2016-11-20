@@ -42,6 +42,15 @@ Route::get('/', function () {
         Route::get('/users/{user}/unfollow','UserController@unfollow')->name('users.unfollow');
 
         Route::get('/user/list','UserController@lists');
+
+        /**
+         * search
+         */
+        Route::get('/search',[
+           'uses'=>'SearchController@getResult',
+            'as'=>'search.results',
+        ]);
+
     });
 
 

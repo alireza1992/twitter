@@ -12,7 +12,10 @@
     <link href="https://fonts.googleapis.com/css?family=Lato:100,300,400,700" rel='stylesheet' type='text/css'>
 
     <!-- Styles -->
+
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{asset('css/style.css')}}">
+
     {{-- <link href="{{ elixir('css/app.css') }}" rel="stylesheet"> --}}
 
     <style>
@@ -54,9 +57,22 @@
             <a class="navbar-brand" href="{{ url('/') }}">
                 Laravel
             </a>
-            <a href="{{url('/user/list')}}" class="navbar-brand">Users</a>
+            <a href="{{url('/user/list')}}" class="navbar-brand">
+                Users
+            </a>
 
-        </div>
+            <div class="container">
+                <div class="row">
+                    <form method="get" action="{{route('search.results')}}">
+                    <div class="search">
+                        <input type="text" name="query" class="form-control " maxlength="20" placeholder="جستجو" />
+                        <button type="submit" class="btn btn-primary btn-sm">Search</button>
+                    </div>
+                    </form>
+                </div>
+            </div>
+             </div>
+
 
         <div class="collapse navbar-collapse" id="app-navbar-collapse">
             <!-- Right Side Of Navbar -->
@@ -100,6 +116,6 @@
                     }
                 }
             </script>
-{{-- <script src="{{ elixir('js/app.js') }}"></script> --}}
+ <script src="{{ elixir('js/app.js') }}"></script>
 </body>
 </html>
