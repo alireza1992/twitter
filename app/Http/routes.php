@@ -25,7 +25,23 @@ Route::get('/', function () {
 | kernel and includes session state, CSRF protection, and more.
 |
 */
+    Route::group(['middleware' => ['web']], function () {
+    Route::auth();
 
-Route::group(['middleware' => ['web']], function () {
-    //
-});
+     });
+
+    Route::group(['middleware' => ['web','auth']], function () {
+    Route::get('/', 'TimelineController@index');
+
+        Route::get('/posts','PostController@index');
+        Route::post('/posts','PostController@create');
+
+
+        Route::get('/users/{user}','UserController@index')->name('users.profile');
+        Route::get('/users/{user}/follow','UserController@follow')->name('users.follow');
+        Route::get('/users/{user}/unfollow','UserController@unfollow')->name('users.unfollow');
+
+        Route::get('/user/list','UserController@lists');
+    });
+
+
