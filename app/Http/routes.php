@@ -51,6 +51,7 @@ Route::get('/', function () {
             'as'=>'search.results',
         ]);
 
+
     });
 
 

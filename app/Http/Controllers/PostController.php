@@ -2,14 +2,22 @@
 
 namespace App\Http\Controllers;
 
+use App\Tag;
+use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Post;
 use App\Http\Controllers\Controller;
 
+
 class PostController extends Controller
 {
+
+    protected function formatValidationErrors(Validator $validator)
+    {
+        return $validator->errors()->all();
+    }
 
     public function index(Request $request, Post $post)
     {
@@ -20,6 +28,7 @@ class PostController extends Controller
         $posts= $allPosts->orderBy('created_at','desc')
             ->take($request->get('limit',20))
             ->get();
+
 
         return response()->json([
             'posts'=>$posts,
@@ -40,8 +49,37 @@ class PostController extends Controller
         ]);
 
         $createdPost= $request->user()->posts()->create([
-            'body'=>$request->body
+            'body'=>$request->body,
+
         ]);
+
+
+        /**
+         * process TAGS
+         */
+
+        $tags= explode('#',$request->input(['tags']));
+        $formatedTags=[];
+
+        foreach($tags as $tag)
+        {
+            if(trim($tag))
+            {
+                $formatedTags[] = strtolower(trim($tag));
+            }
+        }
+
+        $allTagsIds=[];
+
+        foreach($formatedTags as $tags)
+        {
+            $theTag= Tag::create(['name'=>$tags]);
+            $allTagsIds[]=$theTag->id;
+        }
+
+//        $createdPost->tags()->attach($allTagsIds);
+
+
 
         return response()->json($post->with('user')->find($createdPost->id));
 

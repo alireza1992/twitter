@@ -37,4 +37,5 @@ interface Validator extends MessageProvider
      * @return $this
      */
     public function after($callback);
+
 }

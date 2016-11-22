@@ -43,13 +43,15 @@ class User extends Authenticatable
         return $this->hasMany('App\Post');
     }
 
+
+
     /**
      * get avatar of a user
      * @return string
      */
     public function getAvatar()
     {
-        return 'https://www.gravatar.com/avatar/'.md5($this->email).'x?s=45&d=mm';
+        return 'https://www.gravatar.com/avatar/'.md5($this->email).'x?s=200&d=mm';
     }
 
     /**

@@ -5,9 +5,18 @@
         <div class="row" id="timeline">
             <div class="col-md-4">
                 <form action="#" v-on:submit="postStatus">
-                    <div class="form-group">
-                        <textarea class="form-control" id="field" onkeyup="countChar(this)" rows="3" placeholder="What are you upto?" maxlength="140" required v-model="post" ></textarea>
 
+                    <div class="form-group">
+                        @if (count($errors) > 0)
+                            <div class="alert alert-danger">
+                                <ul>
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
+                        <textarea class="form-control" id="field" onkeyup="countChar(this)" rows="3" placeholder="What are you upto?" maxlength="140" required v-model="post" ></textarea>
                     </div>
                     <div id="charNum"></div>
 
@@ -24,7 +33,7 @@
                         </div>
                         <div class="media-body">
                             <div class="user">
-                                <a href="@{{ post.user.profileUrl }}"><strong>@{{ post.user.username }}</strong></a> - @{{ post.humanCreatedAt }}
+                                @{{ post.humanCreatedAt }} <a href="@{{ post.user.profileUrl }}"><strong>@{{ post.user.username }}</strong></a>
                             </div>
                             <p>@{{ post.body }}</p>
                         </div>
